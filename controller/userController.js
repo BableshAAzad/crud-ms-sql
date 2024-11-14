@@ -11,16 +11,16 @@ class UserController {
     };
 
     // Get all users
-    static getUser = async (req, res) => {
-        const userRepository = getRepository(User);
+    static getAllUsers = async (req, res) => {
+        const userRepository = AppDataSource.getRepository(User);
         const users = await userRepository.find();
         res.json(users);
     };
 
     // Get a user by ID
-    static getAllUsers = async (req, res) => {
+    static getUser = async (req, res) => {
         const userRepository = AppDataSource.getRepository(User);
-        const user = await userRepository.findOne(req.params.id);
+        const user = await userRepository.findOne({ where: { id: req.params.userId } });
         if (!user) return res.status(404).json({ message: "User not found" });
         res.json(user);
     };
@@ -28,7 +28,7 @@ class UserController {
     // Update a user by ID
     static updateUsers = async (req, res) => {
         const userRepository = AppDataSource.getRepository(User);
-        const user = await userRepository.findOne(req.params.id);
+        const user = await userRepository.findOne({ where: { id: req.params.userId } });
         if (!user) return res.status(404).json({ message: "User not found" });
 
         userRepository.merge(user, req.body);
@@ -39,7 +39,7 @@ class UserController {
     // Delete a user by ID
     static deleteUser = async (req, res) => {
         const userRepository = AppDataSource.getRepository(User);
-        const result = await userRepository.delete(req.params.id);
+        const result = await userRepository.delete(req.params.userId);
         if (result.affected === 0) return res.status(404).json({ message: "User not found" });
         res.status(204).send();
     };
