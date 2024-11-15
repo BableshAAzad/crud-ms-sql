@@ -12,12 +12,17 @@ const AppDataSource = new DataSource({
     "logging": false,
     "entities": [
         path.join(__dirname, "../entities/User.js"),
+        path.join(__dirname, "../entities/Project.js"),
+        path.join(__dirname, "../entities/Department.js"),
+        path.join(__dirname, "../entities/Company.js"),
     ],
-    "options" : {
+    "options": {
         trustServerCertificate: true,
         trustedConnection: false,
         enableArithAbort: true,
         // instanceName: "SQLEXPRESS",
-    }
+    },
+    migrations: [],
+    subscribers: [],
 });
 module.exports = AppDataSource;

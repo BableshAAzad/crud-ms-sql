@@ -2,12 +2,18 @@ require('reflect-metadata');
 const express = require("express");
 const AppDataSource = require("./config/AppDataSource.js")
 const userRoutes = require("./routes/userRoutes.js");
+const companyRoutes = require("./routes/companyRoutes.js")
+const departmentRoutes = require("./routes/departmentRoutes.js")
+const projectRoutes = require("./routes/projectRoutes.js")
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/users", userRoutes);
+app.use("/api/v1", userRoutes);
+app.use("/api/v1", companyRoutes);
+app.use("/api/v1", departmentRoutes);
+app.use("/api/v1", projectRoutes)
 
 //* Database Connection
 // Initialize the data source connection
