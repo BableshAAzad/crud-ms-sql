@@ -11,15 +11,36 @@ const User = new EntitySchema({
     },
     name: {
       type: "varchar",
-      length: 100
+      length: 100,
+      nullable: false
     },
     email: {
       type: "varchar",
       length: 100,
-      unique: true
+      unique: true,
+      nullable: false
     },
     age: {
-      type: "int"
+      type: "int",
+      nullable: false
+    },
+    userRole: {
+      type: "varchar",
+      length: 20,
+      nullable: false
+    },
+    createdAt: {
+      type: "datetime", // Changed to 'datetime'
+      default: () => "GETDATE()" // Default value for creation time
+    },
+    updatedAt: {
+      type: "datetime", // Changed to 'datetime'
+      default: () => "GETDATE()", // Set default to current timestamp
+      onUpdate: "GETDATE()" // Automatically update on modification
+    },
+    isDeleted: {
+      type: "bit", // Use 'bit' for MSSQL
+      default: false // Default value is 'false'
     }
   }
 });
