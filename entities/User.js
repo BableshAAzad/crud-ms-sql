@@ -7,42 +7,54 @@ const User = new EntitySchema({
     id: {
       primary: true,
       type: "int",
-      generated: true
+      generated: true,
     },
     name: {
       type: "varchar",
       length: 100,
-      nullable: false
+      nullable: false,
     },
     email: {
       type: "varchar",
       length: 100,
       unique: true,
-      nullable: false
+      nullable: false,
     },
     age: {
       type: "int",
-      nullable: false
+      nullable: false,
     },
     userRole: {
       type: "varchar",
       length: 20,
-      nullable: false
+      nullable: false,
     },
     createdAt: {
-      type: "datetime", // Changed to 'datetime'
-      default: () => "GETDATE()" // Default value for creation time
+      type: "datetime",
+      default: () => "GETDATE()", // Default value for creation time
     },
     updatedAt: {
-      type: "datetime", // Changed to 'datetime'
+      type: "datetime",
       default: () => "GETDATE()", // Set default to current timestamp
-      onUpdate: "GETDATE()" // Automatically update on modification
+      onUpdate: "GETDATE()", // Automatically update on modification
     },
     isDeleted: {
       type: "bit", // Use 'bit' for MSSQL
-      default: false // Default value is 'false'
-    }
-  }
+      default: false, // Default value is 'false'
+    },
+  },
+  relations: {
+    projects: {
+      type: "many-to-many",
+      target: "Project",
+      inverseSide: "users",
+      joinTable: {
+        name: "user_projects"
+      },
+    },
+  },
 });
 
 module.exports = User;
+
+
