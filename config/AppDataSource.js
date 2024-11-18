@@ -9,7 +9,7 @@ const AppDataSource = new DataSource({
     "password": "root",
     "database": "crud_demo",
     "synchronize": true,
-    "logging": false,
+    "logging": true,
     "entities": [
         path.join(__dirname, "../entities/User.js"),
         path.join(__dirname, "../entities/Project.js"),

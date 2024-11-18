@@ -1,5 +1,4 @@
 const { EntitySchema } = require("typeorm");
-const Department = require("./Department.js");
 
 const Project = new EntitySchema({
     name: "Project",
@@ -19,13 +18,19 @@ const Project = new EntitySchema({
         departmentId: {
             type: "int",
             nullable: false,
+            default: 0,
+        },
+        managerId: {
+            type: "int",
+            nullable: false,
+            default: 0,
         },
         createdAt: {
-            type: "datetime", // Use 'datetime'
+            type: "datetime",
             default: () => "GETDATE()", // Default value for creation time
         },
         updatedAt: {
-            type: "datetime", // Use 'datetime'
+            type: "datetime",
             default: () => "GETDATE()", // Default value for updates
             onUpdate: "GETDATE()", // Automatically update on modification
         },
@@ -33,8 +38,24 @@ const Project = new EntitySchema({
     relations: {
         department: {
             type: "many-to-one",
-            target: Department,
+            target: "Department",
             joinColumn: { name: "departmentId" },
+        },
+        // users: {
+        //     type: "many-to-many",
+        //     target: "User",
+        //     joinTable: {
+        //         name: "user_projects",
+        //         joinColumn: { name: "projectId", referencedColumnName: "id" },
+        //         inverseJoinColumn: { name: "userId", referencedColumnName: "id" }
+        //     },
+        // },
+        users: {
+            type: "many-to-many",
+            target: "User",
+            joinTable: true,
+            inverseSide: "projects",
+            joinTable: false
         },
     },
 });
